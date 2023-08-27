@@ -5,11 +5,11 @@
 
 #define MAX_BRUSH_SIZE ((unsigned short) 600)
 #define MAX_TEXTURE_LENGTH ((unsigned char) 255)
-int minX = -1000, maxX = 1000, size = 8;
+int minX = -700, maxX = 700, size = 8, spacing = 2;
 
 double f(double x) {
-    //return x * x * (x/10000);
-    return sin((x/10))*10;
+    return x * x * (x/10000);
+    //return sin((x/100))*100;
     // replace with user input at some point
 }
 
@@ -35,7 +35,7 @@ void genBrush6(struct brush6 *b) {
     char footer[] = "64 64 0 0 0 0 lightmap_gray 16384 16384 0 0 0 0";
     char format[] = " ( %d %d %d ) ( %d %d %d ) ( %d %d %d ) %s %s";
 
-    // Calculate the length of the formatted string
+    //calculate the length of the formatted string
     int len = snprintf(NULL, 0, format,
                        b->l + b->x,
                        b->w + b->y,
@@ -48,7 +48,7 @@ void genBrush6(struct brush6 *b) {
                        b->z, // line3
                        b->texture,
                        footer);
-    len++; // Add 1 for the null-terminator
+    len++; //add 1 for the null-terminator
 
     // Allocate memory for the planes
     b->bottomPlane = (char *)malloc(len * sizeof(char));
@@ -151,14 +151,18 @@ struct brush6 *createBrush6(int l, int w, int h, int x, int y, int z, char *text
 }
 
 int main() {
-    for (int x = minX; x < maxX; x++) {
+    if(spacing <= 0) {
+        printf("Spacing too small");
+        return 1;
+    }
+    for (int x = minX; x < maxX; x+=spacing) {
         struct brush6 *b = createBrush6(size, size, size, x, f(x), 0, "caulk");
         genBrush6(b);
         printf("{\n");
         printBrush6(b);
         printf("\n}\n");
 
-        // Free the allocated memory
+        //free the allocated memory
         free(b->bottomPlane);
         free(b->topPlane);
         free(b->sidePlane1);
@@ -167,6 +171,5 @@ int main() {
         free(b->sidePlane4);
         free(b);
     }
-
     return 0;
 }
