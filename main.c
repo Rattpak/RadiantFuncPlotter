@@ -1,13 +1,16 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 
 #define MAX_BRUSH_SIZE ((unsigned short) 600)
 #define MAX_TEXTURE_LENGTH ((unsigned char) 255)
-int minX = -100, maxX = 100, size = 10;
+int minX = -1000, maxX = 1000, size = 8;
 
 double f(double x) {
-    return x * x * (x/1000); // replace with user input at some point
+    //return x * x * (x/10000);
+    return sin((x/10))*10;
+    // replace with user input at some point
 }
 
 struct brush6 {
