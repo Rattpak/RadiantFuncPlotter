@@ -6,9 +6,13 @@
 #define MAX_BRUSH_SIZE ((unsigned short) 600)
 #define MAX_TEXTURE_LENGTH ((unsigned char) 255)
 int minX = -700, maxX = 700, size = 8, spacing = 2;
+//minX - The minimum X value
+//maxX - The maximum X value
+//size - The size of the plot point (cod units)
+//spacing - Increment through X values by this amount. Cannot be <= 0
 
 double f(double x) {
-    return x * x * (x/10000);
+    return x * x * (x/10000); //REPLACE RETURN FUNCTION HERE
     //return sin((x/100))*100;
     // replace with user input at some point
 }
